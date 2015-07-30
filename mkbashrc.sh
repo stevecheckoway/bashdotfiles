@@ -19,9 +19,9 @@ DARK_PURPLE="\[\033[0;35m\]"
  COLOR_NONE="\[\033[0m\]"
 
 cat <<EOF
-    clean_pattern='nothing to commit|nothing added to commit'
-   remote_pattern='Your branch is (ahead of|behind)'
-  diverge_pattern='Your branch and (.*) have diverged'
+clean_pattern='nothing to commit|nothing added to commit'
+remote_pattern='Your branch is (ahead of|behind)'
+diverge_pattern='Your branch and (.*) have diverged'
 untracked_pattern='Untracked files:'
 
 parse_git_branch() {
