@@ -85,7 +85,7 @@ EOF
 
 # Add alises
 cat <<"EOF"
-alias ls='ls --color=auto'
+which dircolors &>/dev/null && { eval $(dircolors); alias ls='ls --color=auto'; } || alias ls='ls -G'
 alias less='less -R'
 alias bc='bc -ql'
 alias '?=eval_helper'
