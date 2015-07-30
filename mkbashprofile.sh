@@ -59,8 +59,6 @@ export PAGER='less -R'
 export EDITOR=vim
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
-export PS1="[\[$(tput setaf 1)\]\h\[$(tput sgr0)\]:\w] \u\$ "
-export PS2="\[$(tput setaf 1)\]>\[$(tput sgr0)\] "
 EOF
 
 # Source .bashrc to deal load functions and aliases which are not
