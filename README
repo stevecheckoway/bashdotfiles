@@ -1,6 +1,0 @@
-Bash login shells run ~/.bash_profile. Interactive, nonlogin shells
-run ~/.bashrc.
-
-Since nonlogin shells inherit their environment, put exported
-environment variables in .bash_profile and nonexported functions and
-aliases in .bashrc. The end of .bash_profile should source .bashrc.
