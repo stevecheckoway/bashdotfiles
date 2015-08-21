@@ -64,5 +64,5 @@ EOF
 # Source .bashrc to deal load functions and aliases which are not
 # exported.
 cat <<EOF
-test -f "$HOME/.bashrc" && . "$HOME/.bashrc"
+. "$HOME/.bashrc"
 EOF
