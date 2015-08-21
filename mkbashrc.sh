@@ -94,6 +94,6 @@ EOF
 
 # Load local changes, if appropriate.
 cat <<EOF
-test -f "$HOME/.bash_functions" && . "$HOME/.bash_functions"
-test -f "$HOME/.bash_aliases" && . "$HOME/.bash_aliases"
+if [ -f "$HOME/.bash_functions" ]; then . "$HOME/.bash_functions"; fi
+if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi
 EOF
