@@ -23,7 +23,14 @@ clean_pattern='nothing to commit|nothing added to commit'
 remote_pattern='Your branch is (ahead of|behind)'
 diverge_pattern='Your branch and (.*) have diverged'
 untracked_pattern='Untracked files:'
-
+case "\$TERM" in
+	xterm*|rxvt*)
+		TITLEBAR="\[\e]0;\u@\h: \w\a\]"
+		;;
+	*)
+		TITLEBAR=
+		;;
+esac
 parse_git_branch() {
 	git_status="\$(git status 2>/dev/null)"
 	if test \$? -ne 0; then
@@ -54,17 +61,8 @@ parse_git_branch() {
 	[[ \${git_status} =~ \${branch_pattern} ]]
 	echo " (\${state}\${BASH_REMATCH[1]}\${untracked}${YELLOW}\${remote}${COLOR_NONE})"
 }
-
 prompt_func() {
 	previous_return_value=\$?
-	case "\$TERM" in
-		xterm*|rxvt*)
-			TITLEBAR="\[\e]0;\u@\h: \w\a\]"
-			;;
-		*)
-			TITLEBAR=
-			;;
-	esac
 	prompt="\${TITLEBAR}[${RED}\h${COLOR_NONE}:\w]\$(parse_git_branch) \u"
 	if test \$previous_return_value -eq 0; then
 		PS1="\${prompt}\\\$ "
@@ -72,7 +70,6 @@ prompt_func() {
 		PS1="\${prompt}${RED}\\\$${COLOR_NONE} "
 	fi
 }
-
 PROMPT_COMMAND=prompt_func
 EOF
 
