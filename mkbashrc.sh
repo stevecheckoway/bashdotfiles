@@ -19,10 +19,6 @@ DARK_PURPLE="\[\033[0;35m\]"
  COLOR_NONE="\[\033[0m\]"
 
 cat <<EOF
-clean_pattern='nothing to commit|nothing added to commit'
-remote_pattern='Your branch is (ahead of|behind)'
-diverge_pattern='Your branch and (.*) have diverged'
-untracked_pattern='Untracked files:'
 case "\$TERM" in
 	xterm*|rxvt*)
 		TITLEBAR="\[\e]0;\u@\h: \w\a\]"
@@ -32,28 +28,33 @@ case "\$TERM" in
 		;;
 esac
 parse_git_branch() {
+	local git_status
+	local state
+	local untracked
+	local remote
+	local branch_pattern
 	git_status="\$(git status 2>/dev/null)"
 	if test \$? -ne 0; then
 		return
 	fi
-	if [[ \${git_status} =~ \${clean_pattern} ]]; then
+	if [[ \${git_status} =~ 'nothing to commit'|'nothing added to commit' ]]; then
 		state="$GREEN"
 	else
 		state="$RED"
 	fi
-	if [[ \${git_status} =~ \${untracked_pattern} ]]; then
+	if [[ \${git_status} =~ Untracked\ files: ]]; then
 		untracked='*'
 	else
 		untracked=''
 	fi
 	remote=
-	if [[ \${git_status} =~ \${remote_pattern} ]]; then
+	if [[ \${git_status} =~ 'Your branch is '(ahead\ of|behind) ]]; then
 		if [ "\${BASH_REMATCH[1]}" = "ahead of" ]; then
 			remote=↑
 		else
 			remote=↓
 		fi
-	elif [[ \${git_status} =~ \${diverge_pattern} ]]; then
+	elif [[ \${git_status} =~ 'Your branch and '.*' have diverged' ]]; then
 		remote=↕
 	fi
 	# Branch pattern
@@ -62,7 +63,8 @@ parse_git_branch() {
 	echo " (\${state}\${BASH_REMATCH[1]}\${untracked}${YELLOW}\${remote}${COLOR_NONE})"
 }
 prompt_func() {
-	previous_return_value=\$?
+	local previous_return_value=\$?
+	local prompt
 	prompt="\${TITLEBAR}[${RED}\h${COLOR_NONE}:\w]\$(parse_git_branch) \u"
 	if test \$previous_return_value -eq 0; then
 		PS1="\${prompt}\\\$ "
@@ -82,7 +84,12 @@ EOF
 
 # Add alises
 cat <<"EOF"
-which dircolors &>/dev/null && { eval $(dircolors); alias ls='ls --color=auto'; } || alias ls='ls -G'
+if which dircolors &>/dev/null; then
+	eval "$(dircolors)"
+	alias ls='ls --color=auto'
+else
+	alias ls='ls -G'
+fi
 alias less='less -R'
 alias bc='bc -ql'
 alias '?=eval_helper'
