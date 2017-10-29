@@ -90,8 +90,8 @@ alias less='less -R'
 alias bc='bc -ql'
 alias '?=eval_helper'
 alias gdb='gdb -q'
-alias dotfiles='git --git-dir="$HOME/.dotfiles/dotfiles.git" --work-tree="$HOME"'
 EOF
+echo "alias dotfiles='GIT_DIR=$HOME/.dotfiles/dotfiles.git GIT_WORK_TREE=$HOME git'"
 
 # Check for nvim
 if which nvim >/dev/null; then
