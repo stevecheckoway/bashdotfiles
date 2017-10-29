@@ -57,13 +57,19 @@ cat <<"EOF"
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export PAGER='less -R'
-export EDITOR=vim
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
 EOF
 
-# Source .bashrc to deal load functions and aliases which are not
-# exported.
+# Check for nvim
+if which nvim >/dev/null; then
+	echo 'export EDITOR=nvim'
+else
+	echo 'export EDITOR=vim'
+fi
+
+
+# Source .bashrc to load functions and aliases which are not exported.
 cat <<EOF
 . "$HOME/.bashrc"
 EOF

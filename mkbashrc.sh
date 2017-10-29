@@ -93,6 +93,11 @@ alias gdb='gdb -q'
 alias dotfiles='git --git-dir="$HOME/.dotfiles/dotfiles.git" --work-tree="$HOME"'
 EOF
 
+# Check for nvim
+if which nvim >/dev/null; then
+	echo "alias view='nvim -R'"
+fi
+
 # Load local changes, if appropriate.
 cat <<EOF
 if [ -f "$HOME/.bash_functions" ]; then . "$HOME/.bash_functions"; fi
