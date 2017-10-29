@@ -90,6 +90,7 @@ alias less='less -R'
 alias bc='bc -ql'
 alias '?=eval_helper'
 alias gdb='gdb -q'
+alias dotfiles='git --git-dir="$HOME/.dotfiles/dotfiles.git" --work-tree="$HOME"'
 EOF
 
 # Load local changes, if appropriate.
